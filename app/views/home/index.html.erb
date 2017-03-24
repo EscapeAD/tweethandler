@@ -1,3 +1,4 @@
+<div class='container'>
 <h1> Import </h1>
 
 <% if @tweets.empty? %>
@@ -7,9 +8,31 @@
   <% end %>
 <% else %>
 <%= button_to 'Clear Tweets', root_path, method: :delete %>
-<ul>
-<% @tweets.each do | tweet | %>
-  <li><strong><%= tweet.tweet_type %></strong> - <%= tweet.tweet %> </li>
+
+<h2>Tweets</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Tweet</th>
+        <th>Type</th>
+        <th>Language</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tweets.each do | tweet | %>
+      <tr>
+        <td> <%= tweet.tweet %> </td>
+        <td><%= tweet.tweet_type %></td>
+        <td>dolor</td>
+        <td>sit</td>
+      </tr>
+      <% end %>
+
+    </tbody>
+  </table>
 <% end %>
-</ul>
-<% end %>
+
+
+</div>
