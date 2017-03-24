@@ -6,6 +6,7 @@
   <%= submit_tag "Import Csv"%>
   <% end %>
 <% else %>
+<%= button_to 'Clear Tweets', root_path, method: :delete %>
 <ul>
 <% @tweets.each do | tweet | %>
   <li><strong><%= tweet.tweet_type %></strong> - <%= tweet.tweet %> </li>

@@ -5,6 +5,12 @@ class HomeController < ApplicationController
 
   def import
     Tweet.import(params[:file])
+    redirect_to root_path
+  end
+
+  def destroy
+    Tweet.destroy_all
+    redirect_to root_path
   end
 
 end
