@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:EscapeAD/dandelionapi-ruby.git
+  revision: 50185f750570186101e29b51d0a990034b43eeac
+  specs:
+    dandelionapi (0.0.5)
+      faraday (~> 0.9, >= 0.9.0)
+      faraday_middleware (~> 0.9, >= 0.9.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -49,9 +57,6 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
-    dandelionapi (0.0.5)
-      faraday (~> 0.9, >= 0.9.0)
-      faraday_middleware (~> 0.9, >= 0.9.1)
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -170,7 +175,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
-  dandelionapi
+  dandelionapi!
   figaro
   jbuilder (~> 2.5)
   jquery-rails

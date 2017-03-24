@@ -1,5 +1,4 @@
 class Tweet < ApplicationRecord
-  require 'roo'
 
   def self.import(file)
     # default CSV format not UTF-8 based on example
@@ -9,6 +8,21 @@ class Tweet < ApplicationRecord
     Tweet.create!(tweet: hash[:tweet], tweet_type: hash[:type])
     end
     Tweet.first.delete
+    Tweet.danedlion
+  end
+
+  def self.danedlion
+    Dandelionapi.configure do |c|
+      c.token   = Figaro.env.api_key
+      c.endpoint = "https://api.dandelion.eu/"
+    end
+    element = Dandelionapi::LanguageDetection::Request.new
+    response = element.analyze(text: "HELLO SIRS")
+    puts response.detectedLangs
+    tweets = Tweet.all
+    tweets.each do |tweet|
+
+    end
   end
 
 end
