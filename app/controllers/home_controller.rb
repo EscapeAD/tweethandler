@@ -1,8 +1,10 @@
 class HomeController < ApplicationController
   def index
+    @tweets = Tweet.all
   end
 
   def import
-    puts "ok"
+    Tweet.import(params[:file])
   end
+
 end

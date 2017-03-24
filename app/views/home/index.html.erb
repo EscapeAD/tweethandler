@@ -1,9 +1,14 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-
 <h1> Import </h1>
 
+<% if @tweets.empty? %>
 <%= form_tag import_path, multipart: true do %>
   <%= file_field_tag :file, required: true %>
   <%= submit_tag "Import Csv"%>
   <% end %>
+<% else %>
+<ul>
+<% @tweets.each do | tweet | %>
+  <li><strong><%= tweet.tweet_type %></strong> - <%= tweet.tweet %> </li>
+<% end %>
+</ul>
+<% end %>
