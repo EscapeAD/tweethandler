@@ -22,13 +22,12 @@
     <tbody>
       <% @tweets.each do | tweet | %>
       <tr>
-        <td> <%= tweet.tweet %> </td>
+        <td><%= tweet.tweet %></td>
         <td><%= tweet.tweet_type %></td>
-        <td>dolor</td>
-        <td>sit</td>
+        <td><%= tweet.language %></td>
+        <td><%= tweet.score %></td>
       </tr>
       <% end %>
-
     </tbody>
   </table>
 <% end %>
