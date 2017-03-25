@@ -22,16 +22,16 @@ class Tweet < ApplicationRecord
     # # highest language on top
     # puts language_detected['detectedLangs'][0]
     # sentiment contains both files
-    sentiment = Dandelionapi::SentimentAnalysis::Request.new
-    sentiment_score = sentiment.analyze(text: "welcome to the zone")
-    puts sentiment_score
+
     # highest language on top
-    puts sentiment_score['sentiment']
     tweets = Tweet.all
     tweets.each do |tweet|
+      sentiment = Dandelionapi::SentimentAnalysis::Request.new
+      sentiment_score = sentiment.analyze(text: tweet.tweet)
       tweet.update_attributes(score: sentiment_score['sentiment']['score'],
                               language: sentiment_score['lang']
       )
+      puts sentiment_score['sentiment']
     end
   end
 
