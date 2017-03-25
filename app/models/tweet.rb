@@ -16,12 +16,19 @@ class Tweet < ApplicationRecord
       c.token   = Figaro.env.api_key
       c.endpoint = "https://api.dandelion.eu/"
     end
-    element = Dandelionapi::LanguageDetection::Request.new
-    response = element.analyze(text: "HELLO SIRS")
-    puts response.detectedLangs
+    language = Dandelionapi::LanguageDetection::Request.new
+    language_detected = language.analyze(text: "HELLO SIR")
+    puts language_detected
+    # highest language on top
+    puts language_detected['detectedLangs'][0]
+    sentiment = Dandelionapi::SentimentAnalysis::Request.new
+    sentiment_score = sentiment.analyze(text: "HELLO SIR")
+    puts sentiment_score
+    # highest language on top
+    puts sentiment_score['sentiment']
     tweets = Tweet.all
     tweets.each do |tweet|
-
+    #   tweet.update_attributes(score: )
     end
   end
 
