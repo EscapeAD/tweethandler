@@ -25,6 +25,12 @@ $(document).on('turbolinks:load', function() {
     ajax("score", score)
   })
 
+  $('#set-filter').on('click', function(e){
+    console.log('changes saved');
+    var sentiment = $('input[name=sentiment]:checked', '#filters').val()
+    console.log(sentiment)
+  })
+
   function ajax(type, binary){
     $.ajax({
       url: '/',
@@ -49,4 +55,5 @@ $(document).on('turbolinks:load', function() {
       $(id).addClass('up');
     }
   }
+
 })

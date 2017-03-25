@@ -1,20 +1,25 @@
 <div class='container'>
-<h1>  </h1>
 <% if @tweets.empty? %>
 <%= form_tag import_path, multipart: true do %>
-  <%= file_field_tag :file, required: true, class: 'btn-inverse btn' %>
+  <%= file_field_tag :file, required: true, class: 'btn-inverse btn pull-xs-right' %>
   <%= submit_tag "Import Csv", class: 'btn-inverse btn'%>
   <% end %>
 <% else %>
-<%= button_to 'Clear Tweets', root_path, method: :delete, class: 'btn-inverse btn' %>
+<%= button_to 'Clear Tweets', root_path, method: :delete, class: 'btn-inverse btn float-left' %>
+<%= link_to 'Reset Filters', root_path, class: 'btn-warning btn float-right' %>
+<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#filterModal">
+  Filter
+</button>
+
+<br/><br/>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
         <th>Tweets</th>
         <th class='text-center'><a class='arrow' href='#' id='tweet_type'>Type</a></th>
-        <th class='text-center'><a href='#' id='language'>Language</a></th>
-        <th class='text-center'><a href='#' id='score'>Score</a></th>
+        <th class='text-center'><a class='arrow' href='#' id='language'>Language</a></th>
+        <th class='text-center'><a class='arrow' href='#' id='score'>Score</a></th>
       </tr>
     </thead>
     <tbody id='search-results'>
@@ -23,3 +28,4 @@
   </table>
   <% end %>
 </div>
+<%= render 'modal' %>
