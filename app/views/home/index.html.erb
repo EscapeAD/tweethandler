@@ -1,36 +1,32 @@
 <div class='container'>
-<h1> Import </h1>
-
+<h1>  </h1>
 <% if @tweets.empty? %>
 <%= form_tag import_path, multipart: true do %>
-  <%= file_field_tag :file, required: true %>
-  <%= submit_tag "Import Csv"%>
+  <%= file_field_tag :file, required: true, class: 'btn-inverse btn' %>
+  <%= submit_tag "Import Csv", class: 'btn-inverse btn'%>
   <% end %>
 <% else %>
-<%= button_to 'Clear Tweets', root_path, method: :delete %>
-
+<%= button_to 'Clear Tweets', root_path, method: :delete, class: 'btn-inverse btn' %>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Tweet</th>
-        <th>Type</th>
-        <th>Language</th>
-        <th>Score</th>
+        <th>Tweets</th>
+        <th class='text-center'>Type</th>
+        <th class='text-center'>Language</th>
+        <th class='text-center'>Score</th>
       </tr>
     </thead>
     <tbody>
       <% @tweets.each do | tweet | %>
       <tr>
         <td><%= tweet.tweet %></td>
-        <td><%= tweet.tweet_type %></td>
-        <td><%= tweet.language %></td>
-        <td><%= tweet.score %></td>
+        <td class='text-center'><%= tweet.tweet_type %></td>
+        <td class='text-center'><%= tweet.language %></td>
+        <td class='text-center'><%= sprintf('%.2f', tweet.score) %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
 <% end %>
-
-
 </div>
