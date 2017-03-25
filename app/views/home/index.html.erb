@@ -12,21 +12,14 @@
     <thead>
       <tr>
         <th>Tweets</th>
-        <th class='text-center'>Type</th>
-        <th class='text-center'>Language</th>
-        <th class='text-center'>Score</th>
+        <th class='text-center'><a href='#' id='tweet_type'>Type</a></th>
+        <th class='text-center'><a href='#' id='language'>Language</a></th>
+        <th class='text-center'><a href='#' id='score'>Score</a></th>
       </tr>
     </thead>
-    <tbody>
-      <% @tweets.each do | tweet | %>
-      <tr>
-        <td><%= tweet.tweet %></td>
-        <td class='text-center'><%= tweet.tweet_type %></td>
-        <td class='text-center'><%= tweet.language %></td>
-        <td class='text-center'><%= sprintf('%.2f', tweet.score) %></td>
-      </tr>
-      <% end %>
+    <tbody id='search-results'>
+      <%= render 'tweet' %>
     </tbody>
   </table>
-<% end %>
+  <% end %>
 </div>

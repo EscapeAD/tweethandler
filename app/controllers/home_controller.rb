@@ -1,6 +1,12 @@
 class HomeController < ApplicationController
   def index
-    @tweets = Tweet.all
+    if params[:search]
+      @tweets = Tweet.order("#{params[:search]} #{params[:direction]}")
+      render partial: 'tweet'
+    else
+      @tweets = Tweet.all
+    end
+
   end
 
   def import
