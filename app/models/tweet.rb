@@ -16,12 +16,6 @@ class Tweet < ApplicationRecord
       c.token   = Figaro.env.api_key
       c.endpoint = "https://api.dandelion.eu/"
     end
-    # language = Dandelionapi::LanguageDetection::Request.new
-    # language_detected = language.analyze(text: "HELLO SIR")
-    # puts language_detected
-    # # highest language on top
-    # puts language_detected['detectedLangs'][0]
-    # sentiment contains both files
 
     # highest language on top
     tweets = Tweet.all

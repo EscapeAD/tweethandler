@@ -1,25 +1,28 @@
 $(document).on('turbolinks:load', function() {
   console.log("Js Loading after turbolinks")
-  var scoreCount = 0;
-  var typeCount = 0;
-  var langCount = 0;
+  var score       = false;
+  var tweet_type  = false;
+  var language    = false;
 
   $('#language').on('click', function(e){
     e.preventDefault();
-    langCount ++;
-    ajax("lang", langCount)
+    language = !language;
+    border('#language', language)
+    ajax("language", language)
   })
 
   $('#tweet_type').on('click', function(e){
     e.preventDefault();
-    typeCount ++;
-    ajax("tweet_type", typeCount)
+    tweet_type = !tweet_type;
+    border('#tweet_type', tweet_type)
+    ajax("tweet_type", tweet_type)
   })
 
   $('#score').on('click', function(e){
     e.preventDefault();
-    scoreCount ++;
-    ajax("score", scoreCount)
+    score = !score;
+    border('#score', score)
+    ajax("score", score)
   })
 
   function ajax(type, binary){
@@ -28,12 +31,22 @@ $(document).on('turbolinks:load', function() {
       method: 'GET',
       data: {
         'search': type,
-        'direction': binary % 2 == 0 ? 'DESC' : 'ASC'
+        'direction': binary ? 'ASC' : 'DESC'
             },
       dataType: 'html'
     }).success(function(data){
       $('#search-results').empty();
       $('#search-results').append(data);
     })
+  }
+
+  function border(id, direction){
+    $('.up').removeClass();
+    $('.down').removeClass();
+    if(direction){
+      $(id).addClass('down');
+    } else {
+      $(id).addClass('up');
+    }
   }
 })
