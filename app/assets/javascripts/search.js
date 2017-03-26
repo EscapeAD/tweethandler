@@ -1,30 +1,7 @@
 $(document).on('turbolinks:load', function() {
-  console.log("Js Loading after turbolinks")
-  var score       = false;
-  var tweet_type  = false;
-  var language    = false;
+  var category    = "id";
+  var direction   = false;
   var filters_on  = {};
-
-  $('#language').on('click', function(e){
-    e.preventDefault();
-    language = !language;
-    border('#language', language)
-    ajax("language", language)
-  })
-
-  $('#tweet_type').on('click', function(e){
-    e.preventDefault();
-    tweet_type = !tweet_type;
-    border('#tweet_type', tweet_type)
-    ajax("tweet_type", tweet_type)
-  })
-
-  $('#score').on('click', function(e){
-    e.preventDefault();
-    score = !score;
-    border('#score', score)
-    ajax("score", score)
-  })
 
   $('#set-filter').on('click', function(e){
     var filter_sentiment = $('input[name=sentiment]:checked', '#filters').val();
@@ -33,7 +10,18 @@ $(document).on('turbolinks:load', function() {
     if(filter_sentiment != undefined) filters_on['sentiment']   = (filter_sentiment)
     if(filter_lang      != undefined) filters_on['lang']        = (filter_lang)
     if(filter_type      != undefined) filters_on['tweet_type']  = (filter_type)
+    ajax()
   })
+
+  // refactor to group code
+  $('.arrow').on('click', function(e){
+    e.preventDefault();
+    direction = !direction
+    category  = $(this).attr("id")
+    border($(this))
+    ajax()
+  })
+
 
   $('#filter-start').on('click', function(){
     $.ajax({
@@ -47,13 +35,13 @@ $(document).on('turbolinks:load', function() {
     })
   })
 
-  function ajax(type, binary){
+  function ajax(){
     $.ajax({
       url: '/',
       method: 'GET',
       data: {
-        'search': type,
-        'direction': binary ? 'ASC' : 'DESC',
+        'search': category,
+        'direction': direction ? 'ASC' : 'DESC',
         'filters_types': filters_on
             },
       dataType: 'html'
@@ -63,13 +51,14 @@ $(document).on('turbolinks:load', function() {
     })
   }
 
-  function border(id, direction){
+  function border(id){
     $('.up').removeClass();
     $('.down').removeClass();
+    console.log(id)
     if(direction){
-      $(id).addClass('down');
+      id.addClass('down');
     } else {
-      $(id).addClass('up');
+      id.addClass('up');
     }
   }
 
