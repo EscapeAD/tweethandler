@@ -56,7 +56,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "figaro"
 
 # Dandelion API Ruby Gem
-gem 'dandelionapi', git: 'git@github.com:EscapeAD/dandelionapi-ruby.git'
+gem 'dandelionapi', git: 'git://github.com/EscapeAD/dandelionapi-ruby.git'
 
 # Spreadsheet handler
 gem 'roo'
+
+# error logging
+gem 'rails_12factor', group: :production
