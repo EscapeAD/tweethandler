@@ -27,8 +27,24 @@ $(document).on('turbolinks:load', function() {
 
   $('#set-filter').on('click', function(e){
     console.log('changes saved');
-    var sentiment = $('input[name=sentiment]:checked', '#filters').val()
-    console.log(sentiment)
+    var filter_sentiment = $('input[name=sentiment]:checked', '#filters').val()
+    var filter_lang      = $('input[name=language_check]:checked', '#filters').val()
+    var filter_type      = $('input[name=tweet_type]:checked', '#filters').val()
+    console.log(filter_sentiment)
+    console.log(filter_lang)
+    console.log(filter_type)
+  })
+
+  $('#filter-start').on('click', function(){
+    $.ajax({
+      url: '/filters',
+      method: 'GET',
+      data: {},
+      dataType: 'html'
+    }).success(function(data){
+      $('#additional-filters').empty();
+      $('#additional-filters').append(data);
+    })
   })
 
   function ajax(type, binary){

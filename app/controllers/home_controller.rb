@@ -6,7 +6,12 @@ class HomeController < ApplicationController
     else
       @tweets = Tweet.all
     end
+  end
 
+  def filters
+    languages   = Tweet.uniq.pluck(:language)
+    tweet_type  = Tweet.uniq.pluck(:tweet_type)
+    render partial: 'radio', locals: {languages: languages, tweet_type: tweet_type }
   end
 
   def import

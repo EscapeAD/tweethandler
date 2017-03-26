@@ -1,0 +1,17 @@
+<strong> Languages </strong><br/>
+<% languages.each do |lang| %>
+<div class="form-check form-check-inline">
+  <label class="form-check-label">
+    <input class="form-check-input" type="radio" name="language_check" id="<%= lang %>" value="<%= lang %>"> <%= lang.capitalize %>
+  </label>
+</div>
+<% end %>
+<br/>
+<strong> Tweet Type </strong><br/>
+<% tweet_type.each do |type| %>
+<div class="form-check form-check-inline">
+  <label class="form-check-label">
+    <input class="form-check-input" type="radio" name="tweet_type" id="<%= type %>" value="<%=type%>"> <%= type.capitalize %>
+  </label>
+</div>
+<% end %>
