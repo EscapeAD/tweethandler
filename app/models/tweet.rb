@@ -1,4 +1,5 @@
 class Tweet < ApplicationRecord
+  include
 
   def self.import(file)
     # default CSV format not UTF-8 based on example
@@ -25,7 +26,41 @@ class Tweet < ApplicationRecord
       tweet.update_attributes(score: sentiment_score['sentiment']['score'],
                               language: sentiment_score['lang']
       )
-      puts sentiment_score['sentiment']
+    end
+  end
+
+  def self.filters(object)
+    if object['sentiment'] && object['lang'] && object['tweet_type']
+    return   Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
+                  .where(language: object['lang'])
+                  .where(tweet_type: object['tweet_type'])
+    elsif object['sentiment'] && object['lang']
+    return Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
+                .where(language: object['lang'])
+    elsif object['lang'] && object['tweet_type']
+    return Tweet.where(tweet_type: object['tweet_type'])
+                .where(language: object['lang'])
+    elsif object['sentiment'] && object['tweet_type']
+    return   Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
+                  .where(tweet_type: object['tweet_type'])
+    elsif object['sentiment']
+    return   Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
+    elsif object['tweet_type']
+    return   Tweet.where(tweet_type: object['tweet_type'])
+    elsif object['lang']
+    return   Tweet.where(language: object['lang'])
+    else
+      return Tweet.all
+    end
+  end
+
+  def self.checking_sentiment(phrase)
+    if phrase == 'positive'
+      return 'score > ?'
+    elsif phrase == 'negative'
+      return 'score < ?'
+    else
+      return 'score = ?'
     end
   end
 

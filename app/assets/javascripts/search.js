@@ -3,6 +3,7 @@ $(document).on('turbolinks:load', function() {
   var score       = false;
   var tweet_type  = false;
   var language    = false;
+  var filters_on  = {};
 
   $('#language').on('click', function(e){
     e.preventDefault();
@@ -26,13 +27,12 @@ $(document).on('turbolinks:load', function() {
   })
 
   $('#set-filter').on('click', function(e){
-    console.log('changes saved');
-    var filter_sentiment = $('input[name=sentiment]:checked', '#filters').val()
-    var filter_lang      = $('input[name=language_check]:checked', '#filters').val()
-    var filter_type      = $('input[name=tweet_type]:checked', '#filters').val()
-    console.log(filter_sentiment)
-    console.log(filter_lang)
-    console.log(filter_type)
+    var filter_sentiment = $('input[name=sentiment]:checked', '#filters').val();
+    var filter_lang      = $('input[name=language_check]:checked', '#filters').val();
+    var filter_type      = $('input[name=tweet_type]:checked', '#filters').val();
+    if(filter_sentiment != undefined) filters_on['sentiment']   = (filter_sentiment)
+    if(filter_lang      != undefined) filters_on['lang']        = (filter_lang)
+    if(filter_type      != undefined) filters_on['tweet_type']  = (filter_type)
   })
 
   $('#filter-start').on('click', function(){
@@ -53,7 +53,8 @@ $(document).on('turbolinks:load', function() {
       method: 'GET',
       data: {
         'search': type,
-        'direction': binary ? 'ASC' : 'DESC'
+        'direction': binary ? 'ASC' : 'DESC',
+        'filters_types': filters_on
             },
       dataType: 'html'
     }).success(function(data){
