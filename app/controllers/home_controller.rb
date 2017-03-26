@@ -20,7 +20,10 @@ class HomeController < ApplicationController
   end
 
   def import
-    Tweet.import(params[:file])
+    tweet = Tweet.import(params[:file])
+    if tweet.include?('error')
+      flash[:alert] = tweet[1]
+    end
     redirect_to root_path
   end
 

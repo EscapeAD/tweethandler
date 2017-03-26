@@ -2,9 +2,15 @@ class Tweet < ApplicationRecord
   include
 
   def self.import(file)
+    # error handling for format
+    return  ['error', 'Sorry uploaded incorrect format, only CSV'] if file.content_type != "text/csv"
     # default CSV format not UTF-8 based on example
     sheet = Roo::CSV.new(file.path, csv_options: {external_encoding: 'ISO-8859-1', internal_encoding: 'UTF-8'})
     sheet.parse(clean: true)
+    # error handling for column
+    if !(sheet.row(1).include?("Tweet_Text") && sheet.row(1).include?("Type"))
+      return  ['error', 'Sorry uploaded incorrect headers, Tweet_Text, Type, must be included']
+    end
     sheet.each(tweet: 'Tweet_Text', type: 'Type') do |hash|
     Tweet.create!(tweet: hash[:tweet], tweet_type: hash[:type])
     end
