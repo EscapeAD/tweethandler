@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   before_action :badge_helper
+  
   def index
     if params[:filters_types] && !params[:search]
       @tweets = Tweet.filters(params[:filters_types])
