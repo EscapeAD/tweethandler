@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :badge_helper
   def index
     if params[:filters] && !params[:search]
       @tweets = Tweet.filters(params[:filters_types])
@@ -34,5 +35,8 @@ class HomeController < ApplicationController
   end
 
   private
-
+  def badge_helper
+    @pending  = Tweet.any? ? Tweet.all.count : "0"
+    @complete = Tweet.where('score is NOT NULL').any? ? Tweet.where('score is NOT NULL').count : "0"
+  end
 end

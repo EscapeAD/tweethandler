@@ -13,7 +13,7 @@ class Tweet < ApplicationRecord
       return  ['error', 'Sorry uploaded incorrect headers, Tweet_Text, Type, must be included']
     end
     sheet.each(tweet: 'Tweet_Text', type: 'Type') do |hash|
-      if hash != sheet.row(1)
+      if hash[:tweet] != 'Tweet_Text'
       Tweet.create!(tweet: hash[:tweet], tweet_type: hash[:type])
       end
     end

@@ -16,6 +16,7 @@ App.tweets = App.cable.subscriptions.create({
   received: function(data) {
     // Called when there's incoming data on the websocket for this
     $('#search-results').append(data.tweet);
+    $('#pending-processed').text(data.processed)
   }
 });
 });
