@@ -8,11 +8,9 @@ $(document).on('turbolinks:load', function() {
     var filter_sentiment = $('input[name=sentiment]:checked').val();
     var filter_lang      = $('input[name=language_check]:checked').val();
     var filter_type      = $('input[name=tweet_type]:checked').val();
-    console.log(filter_sentiment)
     if(filter_sentiment != undefined) filters_on['sentiment']   = (filter_sentiment);
     if(filter_lang      != undefined) filters_on['lang']        = (filter_lang);
     if(filter_type      != undefined) filters_on['tweet_type']  = (filter_type);
-    console.log(filters_on)
     ajax()
   })
 

@@ -14,7 +14,7 @@ App.tweets = App.cable.subscriptions.create({
   received: function(data) {
     // Called when there's incoming data on the websocket for this
     if(data.problem){
-      $('#api-issue').text(data.problem);
+      $('#api-issue').text("API Error: " + data.problem);
       $('#api-issue').css('display', 'block');
     } else if (data.empty){
       $('#search-results').empty();
