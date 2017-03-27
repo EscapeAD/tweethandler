@@ -64,5 +64,4 @@ $(document).on('turbolinks:load', function() {
       id.addClass('up');
     }
   }
-
 })

@@ -20,7 +20,9 @@ App.tweets = App.cable.subscriptions.create({
       $('#search-results').empty();
       $('#pending-processed').text("0");
       $('#pending').text("0");
+      $('#upload-show').css('display', 'block');
     } else {
+    $('#controls').css('display', 'block');
     $('#search-results').append(data.tweet);
     $('#pending-processed').text(data.processed);
     $('#pending-pending').text(data.pending);
