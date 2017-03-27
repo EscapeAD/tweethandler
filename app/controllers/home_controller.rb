@@ -13,8 +13,8 @@ class HomeController < ApplicationController
   end
 
   def filters
-    languages   = Tweet.uniq.pluck(:language)
-    tweet_type  = Tweet.uniq.pluck(:tweet_type)
+    languages   = Tweet.where('language is NOT NULL').uniq.pluck(:language)
+    tweet_type  = Tweet.where('tweet_type is NOT NULL').uniq.pluck(:tweet_type)
     render partial: 'radio', locals: {languages: languages, tweet_type: tweet_type }
   end
 
