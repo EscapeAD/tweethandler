@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def index
-
     if params[:filters] && !params[:search]
       @tweets = Tweet.filters(params[:filters_types])
       render partial: 'tweet'
@@ -9,7 +8,7 @@ class HomeController < ApplicationController
       @tweets = Tweet.filters(search_input).order("#{params[:search]} #{params[:direction]}")
       render partial: 'tweet'
     else
-      @tweets = Tweet.all
+      @tweets = Tweet.where('score is NOT NULL')
     end
   end
 
@@ -29,7 +28,7 @@ class HomeController < ApplicationController
 
   def destroy
     Tweet.destroy_all
-    redirect_to root_path
+    render :index
   end
 
 end

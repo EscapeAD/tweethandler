@@ -1,5 +1,6 @@
 class Tweet < ApplicationRecord
-  include
+  after_update_commit {TweetsJob.perform_later(self)}
+  after_create_commit {ApitweetJob.perform_later(self)}
 
   def self.import(file)
     # error handling for format
@@ -12,51 +13,55 @@ class Tweet < ApplicationRecord
       return  ['error', 'Sorry uploaded incorrect headers, Tweet_Text, Type, must be included']
     end
     sheet.each(tweet: 'Tweet_Text', type: 'Type') do |hash|
-    Tweet.create!(tweet: hash[:tweet], tweet_type: hash[:type])
+      if hash != sheet.row(1)
+      Tweet.create!(tweet: hash[:tweet], tweet_type: hash[:type])
+      end
     end
-    Tweet.first.delete
-    Tweet.danedlion
+    return []
   end
 
-  def self.danedlion
+  def self.danedlion(data)
     Dandelionapi.configure do |c|
       c.token   = Figaro.env.api_key
       c.endpoint = "https://api.dandelion.eu/"
     end
-
     # highest language on top
-    tweets = Tweet.all
-    tweets.each do |tweet|
       sentiment = Dandelionapi::SentimentAnalysis::Request.new
-      sentiment_score = sentiment.analyze(text: tweet.tweet)
-      tweet.update_attributes(score: sentiment_score['sentiment']['score'],
+      sentiment_score = sentiment.analyze(text: data.tweet)
+      data.update_attributes(score: sentiment_score['sentiment']['score'],
                               language: sentiment_score['lang']
       )
-    end
   end
 
   def self.filters(object)
     if object['sentiment'] && object['lang'] && object['tweet_type']
-    return   Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
-                  .where(language: object['lang'])
-                  .where(tweet_type: object['tweet_type'])
+    return Tweet.where('score is NOT NULL')
+                .where(Tweet.checking_sentiment(object['sentiment']), 0)
+                .where(language: object['lang'])
+                .where(tweet_type: object['tweet_type'])
     elsif object['sentiment'] && object['lang']
-    return Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
+    return Tweet.where('score is NOT NULL')
+                .where(Tweet.checking_sentiment(object['sentiment']), 0)
                 .where(language: object['lang'])
     elsif object['lang'] && object['tweet_type']
-    return Tweet.where(tweet_type: object['tweet_type'])
+    return Tweet.where('score is NOT NULL')
+                .where(tweet_type: object['tweet_type'])
                 .where(language: object['lang'])
     elsif object['sentiment'] && object['tweet_type']
-    return   Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
-                  .where(tweet_type: object['tweet_type'])
+    return Tweet.where('score is NOT NULL')
+                .where(Tweet.checking_sentiment(object['sentiment']), 0)
+                .where(tweet_type: object['tweet_type'])
     elsif object['sentiment']
-    return   Tweet.where(Tweet.checking_sentiment(object['sentiment']), 0)
+    return Tweet.where('score is NOT NULL')
+                .where(Tweet.checking_sentiment(object['sentiment']), 0)
     elsif object['tweet_type']
-    return   Tweet.where(tweet_type: object['tweet_type'])
+    return Tweet.where('score is NOT NULL')
+                .where(tweet_type: object['tweet_type'])
     elsif object['lang']
-    return   Tweet.where(language: object['lang'])
+    return Tweet.where('score is NOT NULL')
+                .where(language: object['lang'])
     else
-      return Tweet.all
+      return Tweet.where('score is NOT NULL')
     end
   end
 
