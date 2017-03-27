@@ -19,7 +19,7 @@
     <% end %>
   <div class="jumbotron">
   <h1 class="display-3">Tweet Analyzer</h1>
-  <p class="lead">Tweet Analyzer, Checks tweets for language, sentiment (Postive > 0 Neutral < Negative) </p>
+  <p class="lead">Tweet Analyzer, Checks tweets for language, sentiment (Postive > 0 Neutral > Negative) </p>
   <p>Current Status of Application:<br/>
     <strong>Tweets Pending</strong>: <span id='pending' class="badge badge-primary"><%= Tweet.all.count %></span></br/>
     <strong>Tweets Processed</strong>: <span id='pending-processed' class="badge badge-success"><%= @complete %></span></br/>
