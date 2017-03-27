@@ -2,7 +2,7 @@
 <div id='upload-show'>
 <%= form_tag import_path, multipart: true, contoller: :home, action: :import do %>
   <%= file_field_tag :file, required: true, class: 'btn-inverse btn pull-xs-right' %>
-  <%= submit_tag "Import Csv", class: 'btn-inverse btn'%>
+  <%= submit_tag "Import csv", class: 'btn-inverse btn'%>
 </div>
 <% end %>
 <div id='controls'>
