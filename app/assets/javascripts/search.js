@@ -58,7 +58,6 @@ $(document).on('turbolinks:load', function() {
   function border(id){
     $('.up').removeClass();
     $('.down').removeClass();
-    console.log(id)
     if(direction){
       id.addClass('down');
     } else {

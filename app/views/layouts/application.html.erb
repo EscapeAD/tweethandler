@@ -27,6 +27,8 @@
   <p>It uses utility classes for typography and spacing to space content out within the larger container.<br/>
     <strong>Tweets Pending</strong>: <span id='pending' class="badge badge-primary"><%= Tweet.all.count %></span></br/>
     <strong>Tweets Processed</strong>: <span id='pending-processed' class="badge badge-success"><%= @complete %></span></br/>
+    <div id='api-issue' class="alert alert-danger" role="alert">
+    </div>
  </p>
   </div>
   </div>

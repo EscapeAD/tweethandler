@@ -28,9 +28,13 @@ class Tweet < ApplicationRecord
     # highest language on top
       sentiment = Dandelionapi::SentimentAnalysis::Request.new
       sentiment_score = sentiment.analyze(text: data.tweet)
+      if !sentiment_score['error']
       data.update_attributes(score: sentiment_score['sentiment']['score'],
                               language: sentiment_score['lang']
       )
+      else
+        ActionCable.server.broadcast "room_lobby", problem: sentiment_score['message']
+      end
   end
 
   def self.filters(object)

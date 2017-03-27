@@ -4,8 +4,6 @@ App.tweets = App.cable.subscriptions.create({
   room: 'lobby'}, {
   connected: function() {
     // Called when the subscription is ready for use on the server
-    console.log('Im connected')
-
   },
 
   disconnected: function() {
@@ -15,8 +13,13 @@ App.tweets = App.cable.subscriptions.create({
 
   received: function(data) {
     // Called when there's incoming data on the websocket for this
+    if(data.error){
+      $('#api-issue').text(data.error);
+      $('#api-issue').css('display', 'inital');
+    } else {
     $('#search-results').append(data.tweet);
     $('#pending-processed').text(data.processed)
+  }
   }
 });
 });

@@ -3,7 +3,7 @@ class TweetsJob < ApplicationJob
 
 def perform(tweet)
   tweets_processed = Tweet.where('score is NOT NULL').count
-  ActionCable.server.broadcast "room_lobby", {tweet: render_message(tweet), pending: tweets_pending, processed: tweets_processed}
+  ActionCable.server.broadcast "room_lobby", {tweet: render_message(tweet), processed: tweets_processed}
 end
 
 private
