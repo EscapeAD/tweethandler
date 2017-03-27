@@ -17,6 +17,11 @@ Features:
 - notification upon hitting api limit
 ```
 
+background jobs:
+```
+- after commit a csv log runs api Call
+- action-cable after update job to update page
+```
 
 ## Developer
 
@@ -29,4 +34,5 @@ Adam Tse
 ## issues
 
 ```
+free api limit
 ```
