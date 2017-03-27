@@ -1,10 +1,12 @@
 <div class='container'>
-<%# if @tweets.empty? %>
+<% if !Tweet.any? %>
+<div id='upload-show'>
 <%= form_tag import_path, multipart: true, contoller: :home, action: :import do %>
   <%= file_field_tag :file, required: true, class: 'btn-inverse btn pull-xs-right' %>
   <%= submit_tag "Import Csv", class: 'btn-inverse btn'%>
   <% end %>
-<% #else %>
+</div>
+<% else %>
 <%= button_to 'Clear Tweets', root_path, method: :delete, class: 'btn-inverse btn float-left' %>
 <%= link_to 'Reset Filters', root_path, class: 'btn-warning btn float-right' %>
 <button id='filter-start' type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#filterModal">
@@ -12,6 +14,7 @@
 </button>
 
 <br/><br/>
+<div id='table-show'>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -26,6 +29,7 @@
       <%= render 'tweet' if @tweets %>
     </tbody>
   </table>
-  <%# end %>
-</div>
+  </div>
 <%= render 'modal' %>
+<% end %>
+</div>
