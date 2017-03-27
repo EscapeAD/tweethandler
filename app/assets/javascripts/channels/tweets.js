@@ -4,6 +4,7 @@ App.tweets = App.cable.subscriptions.create({
   room: 'lobby'}, {
   connected: function() {
     // Called when the subscription is ready for use on the server
+    console.log('connected')
   },
 
   disconnected: function() {
@@ -16,6 +17,7 @@ App.tweets = App.cable.subscriptions.create({
     if(data.problem){
       $('#api-issue').text("API Error: " + data.problem);
       $('#api-issue').css('display', 'block');
+      $('#pending').text(data.pending);
     } else if (data.empty){
       $('#search-results').empty();
       $('#pending-processed').text("0");
@@ -27,7 +29,7 @@ App.tweets = App.cable.subscriptions.create({
     $('#upload-show').css('display', 'none');
     $('#search-results').append(data.tweet);
     $('#pending-processed').text(data.processed);
-    $('#pending-pending').text(data.pending);
+    $('#pending').text(data.pending);
     }
   }
 });

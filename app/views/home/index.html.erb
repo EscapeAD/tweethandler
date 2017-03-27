@@ -3,8 +3,8 @@
 <%= form_tag import_path, multipart: true, contoller: :home, action: :import do %>
   <%= file_field_tag :file, required: true, class: 'btn-inverse btn pull-xs-right' %>
   <%= submit_tag "Import csv", class: 'btn-inverse btn'%>
+  <% end %>
 </div>
-<% end %>
 <div id='controls'>
 <%= button_to 'Clear Tweets', root_path, method: :delete, class: 'btn-inverse btn float-left' %>
 <%= link_to 'Reset Filters', root_path, class: 'btn-warning btn float-right' %>

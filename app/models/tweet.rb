@@ -33,7 +33,8 @@ class Tweet < ApplicationRecord
                               language: sentiment_score['lang']
       )
       else
-        ActionCable.server.broadcast "room_lobby", problem: sentiment_score['message']
+        total_tweets = Tweet.all.count
+        ActionCable.server.broadcast "room_lobby", {problem: sentiment_score['message'], pending: total_tweets}
       end
   end
 
