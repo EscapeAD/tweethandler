@@ -13,13 +13,18 @@ App.tweets = App.cable.subscriptions.create({
 
   received: function(data) {
     // Called when there's incoming data on the websocket for this
-    if(data.error){
-      $('#api-issue').text(data.error);
-      $('#api-issue').css('display', 'inital');
+    if(data.problem){
+      $('#api-issue').text(data.problem);
+      $('#api-issue').css('display', 'block');
+    } else if (data.empty){
+      $('#search-results').empty();
+      $('#pending-processed').text("0");
+      $('#pending').text("0");
     } else {
     $('#search-results').append(data.tweet);
-    $('#pending-processed').text(data.processed)
-  }
+    $('#pending-processed').text(data.processed);
+    $('#pending-pending').text(data.pending);
+    }
   }
 });
 });

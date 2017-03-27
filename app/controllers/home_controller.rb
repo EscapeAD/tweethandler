@@ -31,6 +31,7 @@ class HomeController < ApplicationController
 
   def destroy
     Tweet.destroy_all
+    ActionCable.server.broadcast "room_lobby", {empty: 'yes'}
     redirect_to root_path
   end
 
