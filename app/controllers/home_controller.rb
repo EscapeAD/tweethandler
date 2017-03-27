@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
+  before_action :badge_helper
   def index
-
     if params[:filters] && !params[:search]
       @tweets = Tweet.filters(params[:filters_types])
       render partial: 'tweet'
@@ -9,13 +9,15 @@ class HomeController < ApplicationController
       @tweets = Tweet.filters(search_input).order("#{params[:search]} #{params[:direction]}")
       render partial: 'tweet'
     else
-      @tweets = Tweet.all
+      @tweets = Tweet.where('score is NOT NULL')
     end
   end
 
   def filters
-    languages   = Tweet.uniq.pluck(:language)
-    tweet_type  = Tweet.uniq.pluck(:tweet_type)
+    languages   = Tweet.where('language is NOT NULL').uniq.pluck(:language)
+    tweet_type  = Tweet.where('tweet_type is NOT NULL')
+                       .where('tweet_type != ?', 'Type')
+                       .uniq.pluck(:tweet_type)
     render partial: 'radio', locals: {languages: languages, tweet_type: tweet_type }
   end
 
@@ -32,4 +34,9 @@ class HomeController < ApplicationController
     redirect_to root_path
   end
 
+  private
+  def badge_helper
+    @pending  = Tweet.any? ? Tweet.all.count : "0"
+    @complete = Tweet.where('score is NOT NULL').any? ? Tweet.where('score is NOT NULL').count : "0"
+  end
 end

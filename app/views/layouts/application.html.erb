@@ -3,6 +3,7 @@
   <head>
     <title>Crowdbabble</title>
     <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -23,7 +24,12 @@
   <h1 class="display-3">Tweet Analyzer</h1>
   <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
   <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.<br/>
+    <strong>Tweets Pending</strong>: <span id='pending' class="badge badge-primary"><%= Tweet.all.count %></span></br/>
+    <strong>Tweets Processed</strong>: <span id='pending-processed' class="badge badge-success"><%= @complete %></span></br/>
+    <div id='api-issue' class="alert alert-danger" role="alert">
+    </div>
+ </p>
   </div>
   </div>
     <%= yield %>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   root    'home#index'
   post    '/import',            to: 'home#import'
   delete  '/',                  to: 'home#destroy'

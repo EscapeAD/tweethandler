@@ -1,7 +1,8 @@
 $(document).on('turbolinks:load', function() {
-  var category    = "id";
-  var direction   = false;
-  var filters_on  = {};
+  var category       = "id";
+  var direction      = false;
+  var filters_on     = {};
+  var filters_change = "";
 
   $('#set-filter').on('click', function(e){
     var filter_sentiment = $('input[name=sentiment]:checked', '#filters').val();
@@ -30,8 +31,11 @@ $(document).on('turbolinks:load', function() {
       data: {},
       dataType: 'html'
     }).success(function(data){
+      if(filters_change != data){
       $('#additional-filters').empty();
       $('#additional-filters').append(data);
+      filters_change = data;
+    }
     })
   })
 
@@ -54,7 +58,6 @@ $(document).on('turbolinks:load', function() {
   function border(id){
     $('.up').removeClass();
     $('.down').removeClass();
-    console.log(id)
     if(direction){
       id.addClass('down');
     } else {
