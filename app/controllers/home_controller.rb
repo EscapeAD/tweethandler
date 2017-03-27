@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   before_action :badge_helper
   def index
-    if params[:filters] && !params[:search]
+    if params[:filters_types] && !params[:search]
       @tweets = Tweet.filters(params[:filters_types])
       render partial: 'tweet'
     elsif params[:search]
@@ -16,7 +16,6 @@ class HomeController < ApplicationController
   def filters
     languages   = Tweet.where('language is NOT NULL').uniq.pluck(:language)
     tweet_type  = Tweet.where('tweet_type is NOT NULL')
-                       .where('tweet_type != ?', 'Type')
                        .uniq.pluck(:tweet_type)
     render partial: 'radio', locals: {languages: languages, tweet_type: tweet_type }
   end
